@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: kiberspeks-demo
+    env: docker
+    plan: free
+    branch: main
+    rootDir: .
+    autoDeploy: true
+
+    # Persistent storage for /storage (uploads, DomPDF files if you save them)
+    disk:
+      name: storage
+      mountPath: /app/storage
+      sizeGB: 1
+
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        # Render will inject the live URL after first deploy
+        value: https://kiberspeks-demo.onrender.com
+      # Your AI keys (set in Render Dashboard → Environment)
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: APP_AI_PROVIDER
+        value: openai
